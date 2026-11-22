@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>2becology</title>
+<style>
+  :root {
+    --papier: #072033;
+    --vlak: #0B3351;
+    --letters: #EAF2F8;
+    --bijtekst: #A8C2D6;
+    --gedempt: #71919F;
+    --lijn: #1A5480;
+    --accent: #59B3E8;
+    --accent-sterk: #A8D8F5;
+    --hero-boven: #0B3E66;
+    --hero-onder: #0E4D78;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: linear-gradient(180deg, var(--hero-boven) 0%, var(--hero-onder) 100%) fixed, var(--papier);
+    color: var(--letters);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .kader {
+    width: 100%;
+    max-width: 460px;
+    background: rgba(11, 51, 81, 0.70);
+    border: 1px solid var(--lijn);
+    border-radius: 10px;
+    padding: 36px 32px 28px;
+    transition: border-color .15s ease, background-color .15s ease;
+  }
+  .kader:hover {
+    border-color: var(--accent);
+    background: rgba(11, 51, 81, 0.82);
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+    color: var(--letters);
+  }
+  p {
+    margin: 0 0 28px;
+    color: var(--bijtekst);
+  }
+  .rij {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  a.knop {
+    flex-shrink: 0;
+    display: inline-block;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 18px;
+    color: var(--accent);
+    background: transparent;
+    text-decoration: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  a.knop:hover, a.knop:focus-visible {
+    color: var(--accent-sterk);
+    border-color: var(--accent-sterk);
+    outline: none;
+  }
+  a.knop:focus-visible { box-shadow: 0 0 0 2px var(--papier), 0 0 0 4px var(--accent-sterk); }
+</style>
+</head>
+<body>
+  <main class="kader">
+    <h1>Archief</h1>
+    <p>Besloten omgeving. Inloggen kan met je eigen account.</p>
+    <div class="rij">
+      <a class="knop" href="https://archief.2becology.nl">naar het archief</a>
+    </div>
+  </main>
+</body>
+</html>
