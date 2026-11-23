@@ -1,0 +1,962 @@
+<!doctype html><html lang="nl"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="robots" content="noindex, nofollow">
+<title>Assay</title>
+<style>
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:400;font-display:swap;src:url(newsreader-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:400;font-display:swap;src:url(newsreader-latin-400-italic.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:500;font-display:swap;src:url(newsreader-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:500;font-display:swap;src:url(newsreader-latin-500-italic.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:600;font-display:swap;src:url(newsreader-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:600;font-display:swap;src:url(newsreader-latin-600-italic.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url(IBMPlexSans-Regular.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url(IBMPlexSans-Medium.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url(IBMPlexSans-SemiBold.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(IBMPlexMono-Regular.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(IBMPlexMono-Medium.woff2) format('woff2')}
+</style>
+<style>
+  /* Layout: single column hub; a five-colour spectrum (one band per domain) is the recurring motif,
+     carried from the hero glow to the domain tiles to the tool coverage dots. */
+  :root{
+    /* Gemeten uit de lucht op hero.jpg: die loopt van #0B3E66 naar #0E4D78, met
+       #0D4570 als middenwaarde. Dat is geen accentkleur maar een achtergrond, dus
+       het draagt nu de hele pagina. Papier ligt daar net onder zodat de vlakken
+       erbovenop opkomen; het accent is een helder luchtblauw dat van hetzelfde
+       blauw afkomt en op dit donker leesbaar blijft. De donkere standen hieronder
+       gebruiken dezelfde waarden, zodat de pagina er voor iedereen gelijk uitziet. */
+    --paper:#072033;
+    --surface:#0B3351;
+    --surface-2:#0D4570;
+    --ink:#EAF2F8;
+    --ink-soft:#A8C2D6;
+    --ink-faint:#71919F;
+    --line:#1A5480;
+    --accent:#59B3E8;
+    --accent-strong:#A8D8F5;
+    --accent-soft:#0E4772;
+    --glow:0.10;
+
+    /* de lichte scene achter de golf hoort niet op een donkere pagina */
+    --scene-on:0;
+    --sc-sun:#E0A23A;
+    --sc-sky:#56698A;
+    --sc-land:#7C9373;
+    --sc-sea:#4F7A8C;
+    --sc-tech:#3D5A73;
+
+    /* shared domain palette — matches Regulatory Radar's domain tokens */
+    --d-privacy:#9089EC;
+    --d-ai:#DDA75D;
+    --d-aml:#E58297;
+    --d-sanctions:#7FA8C9;
+    --d-cyber:#5FBF77;
+
+    --f-display:"Newsreader", Georgia, serif;
+    --f-body:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --f-mono:"IBM Plex Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      /* gelijk aan het palet hierboven */
+      --paper:#072033;
+      --surface:#0B3351;
+      --surface-2:#0D4570;
+      --ink:#EAF2F8;
+      --ink-soft:#A8C2D6;
+      --ink-faint:#71919F;
+      --line:#1A5480;
+      --accent:#59B3E8;
+      --accent-strong:#A8D8F5;
+      --accent-soft:#0E4772;
+      --glow:0.10;
+      --scene-on:0;
+      --d-privacy:#9089EC;
+      --d-ai:#DDA75D;
+      --d-aml:#E58297;
+      --d-sanctions:#7FA8C9;
+      --d-cyber:#5FBF77;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    /* gelijk aan het palet hierboven */
+    --paper:#072033;
+    --surface:#0B3351;
+    --surface-2:#0D4570;
+    --ink:#EAF2F8;
+    --ink-soft:#A8C2D6;
+    --ink-faint:#71919F;
+    --line:#1A5480;
+    --accent:#59B3E8;
+    --accent-strong:#A8D8F5;
+    --accent-soft:#0E4772;
+    --glow:0.10;
+    --scene-on:0;
+    --d-privacy:#9089EC;
+    --d-ai:#DDA75D;
+    --d-aml:#E58297;
+    --d-sanctions:#7FA8C9;
+    --d-cyber:#5FBF77;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    /* zolang de foto op volle sterkte staat, houden de letters een zachte halo;
+       die verdwijnt zodra de sluier dichttrekt */
+    text-shadow:
+      0 0 3px  rgba(var(--hc, 255,255,255), var(--ha, 0)),
+      0 0 8px  rgba(var(--hc, 255,255,255), var(--ha, 0)),
+      0 0 18px rgba(var(--hc, 255,255,255), var(--ha, 0));
+  }
+  a{ color:inherit; }
+  a:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
+
+  /* ---- ambient glow behind the hero ---- */
+  .glow{
+    position:absolute; inset:0 0 auto 0; height:520px;
+    pointer-events:none; overflow:hidden; z-index:0;
+  }
+  .glow span{
+    position:absolute; width:340px; height:340px; border-radius:50%;
+    filter:blur(70px); opacity:var(--glow);
+  }
+  .glow .g1{ background:var(--d-privacy);   left:-80px;  top:-120px; }
+  .glow .g2{ background:var(--d-aml);       left:30%;    top:-180px; }
+  .glow .g3{ background:var(--d-ai);        right:-60px; top:-100px; }
+  .glow .g4{ background:var(--d-cyber);     left:12%;    top:120px; width:260px; height:260px; }
+  .glow .g5{ background:var(--d-sanctions); right:18%;   top:140px; width:240px; height:240px; }
+  @media (prefers-reduced-motion:no-preference){
+    .glow span{ animation:drift 18s ease-in-out infinite alternate; }
+    .glow .g2{ animation-duration:22s; animation-delay:-6s; }
+    .glow .g3{ animation-duration:20s; animation-delay:-3s; }
+    .glow .g4{ animation-duration:24s; animation-delay:-9s; }
+    .glow .g5{ animation-duration:26s; animation-delay:-12s; }
+  }
+  @keyframes drift{
+    0%  { transform:translate(0,0) scale(1); }
+    100%{ transform:translate(40px,30px) scale(1.15); }
+  }
+
+  .wrap{
+    position:relative; z-index:1;
+    max-width:720px;
+    margin:0 auto;
+    padding:64px 20px 80px;
+    display:flex;
+    flex-direction:column;
+    gap:56px;
+  }
+
+  /* ---- hero: donkere hemel, lichte horizon ---- */
+  .hero{
+    position:relative; display:flex; flex-direction:column; gap:14px;
+    width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+    margin-top:-64px; margin-bottom:-18px;
+    padding:104px max(20px, calc(50vw - 340px)) 56px;
+    min-height:clamp(400px, 56vh, 640px); justify-content:flex-start;
+    overflow:hidden; isolation:isolate; z-index:2;
+    background:
+      linear-gradient(180deg, rgba(4,10,20,.84) 0%, rgba(4,10,20,.42) 32%, rgba(4,10,20,.06) 56%, rgba(4,10,20,0) 76%, rgba(4,10,20,.10) 100%),
+      url("hero.jpg") center 66% / cover no-repeat;
+  }
+  .hero::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:3px; z-index:2;
+    background:linear-gradient(90deg, transparent 0%, rgba(226,238,252,.55) 12%, #FFFFFF 50%, rgba(226,238,252,.55) 88%, transparent 100%);
+    box-shadow:0 -10px 26px -6px rgba(214,232,255,.55);
+  }
+  .hero .scene, .hero .watermark{ display:none; }
+  .hero .eyebrow{ color:#A8BBD4; }
+  .hero h1{ color:#FFFFFF; }
+  .hero h1 .stop{ color:#8FB8FF; }
+  .hero .role{ color:#E2EBF7; text-shadow:0 1px 10px rgba(4,10,20,.75); }
+  .hero .eyebrow, .hero h1{ text-shadow:0 2px 18px rgba(4,10,20,.55); }
+  /* de animatie is eruit gesloopt; wat hieronder stond stuurde het front */
+
+
+
+  /* ---- schakelaars rechtsonder ---- */
+  #switches{
+    position:fixed; right:18px; bottom:18px; z-index:50;
+    display:flex; gap:8px; align-items:center;
+  }
+  #switches button{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; text-shadow:none;
+    padding:10px 16px; border-radius:999px; cursor:pointer;
+    box-shadow:0 8px 22px -10px rgba(0,0,0,.6);
+  }
+  #langswitch,#loginswitch{ background:#FFFFFF; color:#14233D; border:1px solid #94A3B8; }
+  #langswitch:hover,#loginswitch:hover{ border-color:#14233D; }
+
+  /* uitspraak */
+  .statement{
+    width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+    padding:76px max(20px, calc(50vw - 340px)) 72px;
+    position:relative; overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(4,10,20,.80) 0%, rgba(4,10,20,.58) 50%, rgba(4,10,20,.84) 100%),
+      url("band-strand.jpg") center 52% / cover no-repeat;
+  }
+  .statement p{
+    margin:0; max-width:17ch;
+    font-family:var(--f-display); font-style:italic; font-weight:500;
+    font-size:clamp(1.75rem, 1.1rem + 2.6vw, 3rem); line-height:1.1;
+    color:#FFFFFF; text-shadow:0 2px 24px rgba(4,10,20,.6);
+  }
+  .statement .sub{
+    margin-top:18px; max-width:46ch; font-family:var(--f-mono); font-style:normal;
+    font-size:12px; letter-spacing:.07em; text-transform:uppercase; line-height:1.7;
+    color:#AFC2DA; text-shadow:none;
+  }
+  .statement::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:linear-gradient(90deg, transparent 0%, rgba(226,238,252,.5) 12%, #FFFFFF 50%, rgba(226,238,252,.5) 88%, transparent 100%);
+  }
+
+  /* Kaders in plaats van losse strepen: elk onderwerp staat in een eigen omlijsting.
+     De vulling is doorschijnend, zodat de foto er nog doorheen te zien blijft. */
+  .wrap .tool{
+    background:color-mix(in srgb, var(--surface) 70%, transparent);
+    border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; box-shadow:none;
+  }
+  .wrap .tool:hover{
+    transform:none;
+    background:color-mix(in srgb, var(--surface) 88%, transparent);
+    border-color:color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+  .wrap .domain{
+    background:color-mix(in srgb, var(--surface) 70%, transparent);
+    border:1px solid var(--line); border-top:3px solid var(--d); border-radius:10px;
+    padding:12px 12px 10px;
+  }
+  .wrap .domain:hover{ transform:none; box-shadow:none; }
+  .wrap .cred-chip{ background:transparent; }
+
+  .band{
+    width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+    height:clamp(150px, 22vw, 260px);
+    background-size:cover; background-position:center; position:relative;
+  }
+  .band::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:linear-gradient(90deg, transparent 0%, rgba(226,238,252,.5) 12%, #FFFFFF 50%, rgba(226,238,252,.5) 88%, transparent 100%);
+  }
+  .band--veld{ background-image:url("band-veld.jpg"); }
+  .band--water{ background-image:url("band-water.jpg"); }
+  .band--strand{ background-image:url("band-strand.jpg"); }
+  .wrap .cred-chip, .wrap .section-label .count, .wrap .tool-status, .wrap .manual-chip, .wrap .source-chip{ border-radius:3px; }
+  .wrap .spectrum, .wrap .spectrum i, .wrap .footer-spectrum i{ border-radius:0; }
+  .wrap .tool, .wrap .domain{ border-radius:10px; }
+  .hero .spectrum{ height:6px; width:min(300px,78%); }
+  .hero .spectrum i{ box-shadow:0 0 12px -2px currentColor; }
+  .hero > *:not(.watermark):not(.scene){ position:relative; z-index:1; }
+  .scene{
+    position:absolute; z-index:0; left:0; right:0; top:-56px;
+    width:100%; height:auto; max-width:100%;
+    pointer-events:none;
+    opacity:var(--scene-on);
+  }
+  .scene .sc-star{ fill:var(--sc-sky); }
+  .scene .sc-orbit{ fill:none; stroke:var(--sc-sky); stroke-width:.7; opacity:.22; }
+  .scene .sc-orbit.thin{ stroke-dasharray:1 4; opacity:.28; }
+  .scene .sc-ray{ stroke:var(--sc-sun); stroke-width:.8; opacity:.2; }
+  .scene .sc-halo{ fill:none; stroke:var(--sc-sun); stroke-width:.7; opacity:.3; }
+  .scene .sc-sun{ fill:var(--sc-sun); opacity:.5; }
+  .scene .sc-horizon{ stroke:var(--ink); stroke-width:.6; opacity:.22; }
+  .scene .sc-land{ fill:var(--sc-land); opacity:.2; }
+  .scene .sc-land.back{ opacity:.11; }
+  .scene .sc-sea{ fill:none; stroke:var(--sc-sea); stroke-width:.8; stroke-linecap:round; opacity:.3; }
+  .scene .sc-grid{ stroke:var(--sc-tech); stroke-width:.6; opacity:.22; }
+  .scene .sc-beyond{ fill:var(--sc-sky); opacity:.6; }
+  /* watermark: one wave, continuous (physical) -> sampled (bridge) -> stepped (AI) */
+  .watermark{
+    position:absolute; z-index:0; left:0; right:0; top:18px;
+    width:100%; height:auto; max-width:100%;
+    pointer-events:none;
+  }
+  .watermark .wm-line{ fill:none; stroke:var(--ink); stroke-width:1.4; stroke-linejoin:round; stroke-linecap:round; opacity:.16; }
+  .watermark .wm-base{ stroke:var(--ink); stroke-width:.6; stroke-dasharray:2 5; opacity:.12; }
+  .watermark .wm-strata{ stroke:var(--ink); stroke-width:.6; opacity:.1; }
+  .watermark .wm-grid{ fill:var(--ink); opacity:.16; }
+  .watermark .wm-stem{ stroke:var(--accent); stroke-width:1; opacity:.35; }
+  .watermark .wm-dot{ fill:var(--accent); opacity:.55; }
+  .eyebrow{
+    font-family:var(--f-mono); font-size:11.5px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--ink-faint);
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow .live{
+    width:7px; height:7px; border-radius:50%; background:var(--d-cyber);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--d-cyber) 22%, transparent);
+  }
+  h1{
+    margin:0;
+    font-family:var(--f-display);
+    font-weight:500; font-style:italic;
+    font-size:clamp(3rem, 2.2rem + 4vw, 4.6rem);
+    line-height:1;
+    letter-spacing:-0.02em;
+    text-wrap:balance;
+  }
+  h1 .stop{ color:var(--accent); font-style:normal; }
+  .spectrum{
+    display:flex; height:5px; width:min(260px, 70%); border-radius:999px; overflow:hidden; gap:3px;
+  }
+  .spectrum i{ flex:1; border-radius:999px; }
+  @media (prefers-reduced-motion:no-preference){
+    .spectrum i{ transform-origin:left; animation:grow 0.9s cubic-bezier(.2,.8,.2,1) both; }
+    .spectrum i:nth-child(2){ animation-delay:.08s; }
+    .spectrum i:nth-child(3){ animation-delay:.16s; }
+    .spectrum i:nth-child(4){ animation-delay:.24s; }
+    .spectrum i:nth-child(5){ animation-delay:.32s; }
+  }
+  @keyframes grow{ from{ transform:scaleX(0.15); } to{ transform:scaleX(1); } }
+  .role{
+    margin:0;
+    font-family:var(--f-mono); font-size:12.5px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+
+  /* ---- bio ---- */
+  .bio{ display:flex; flex-direction:column; gap:14px; }
+  .bio p{ margin:0; font-size:1.07rem; color:var(--ink-soft); max-width:60ch; }
+  .bio p.lead{ font-family:var(--f-display); font-size:1.3rem; line-height:1.45; color:var(--ink); }
+  .bio em{
+    font-style:italic; color:var(--ink);
+    background:linear-gradient(transparent 62%, var(--accent-soft) 62%);
+    padding:0 2px;
+  }
+  .creds{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:4px; }
+  .creds .label{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:0.07em;
+    text-transform:uppercase; color:var(--ink-faint); margin-right:4px;
+  }
+  .cred-chip{
+    font-family:var(--f-mono); font-size:12px; font-weight:500; letter-spacing:0.03em;
+    padding:5px 11px 5px 9px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line); color:var(--ink);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .cred-chip::before{
+    content:"✓"; font-size:10px; color:var(--d-cyber);
+  }
+
+  /* ---- section label ---- */
+  .section-label{ display:flex; align-items:baseline; gap:12px; margin-bottom:8px; }
+  .section-label h2{
+    margin:0; font-family:var(--f-display); font-style:italic; font-weight:500;
+    font-size:1.55rem; color:var(--ink);
+  }
+  .section-label .count{
+    font-family:var(--f-mono); font-size:11px; color:var(--accent-strong);
+    background:var(--accent-soft); padding:2px 8px; border-radius:999px;
+  }
+  .section-note{ margin:0 0 20px; font-size:0.94rem; color:var(--ink-faint); max-width:58ch; }
+
+  /* ---- domains ---- */
+  .domains{
+    display:grid;
+    grid-template-columns:repeat(5, minmax(0,1fr));
+    gap:10px;
+  }
+  @media (max-width:640px){ .domains{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+  .domain{
+    position:relative;
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--d) 24%, var(--surface)) 0%, var(--surface) 72%);
+    border:1px solid color-mix(in srgb, var(--d) 42%, var(--line));
+    border-top:3px solid var(--d);
+    border-radius:12px;
+    padding:14px 13px 13px;
+    display:flex; flex-direction:column; gap:7px;
+    min-width:0;
+    overflow:hidden;
+    overflow-wrap:anywhere; word-break:break-word; hyphens:auto;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .domain > *{ min-width:0; max-width:100%; overflow-wrap:anywhere; }
+  .domain .d-anchor{ font-size:11.5px; line-height:1.35; }
+  .domain:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px -14px color-mix(in srgb, var(--d) 70%, transparent);
+  }
+  .domain .d-badge{
+    width:30px; height:30px; border-radius:9px;
+    display:grid; place-items:center;
+    background:var(--d); color:var(--surface);
+    font-family:var(--f-mono); font-size:11px; font-weight:500; letter-spacing:0.02em;
+  }
+  .domain .d-name{ font-weight:600; font-size:0.92rem; color:var(--ink); }
+  .domain .d-anchor{ font-size:0.8rem; color:var(--ink-soft); line-height:1.4; }
+  .domain .d-exam{
+    margin-top:auto; padding-top:6px;
+    font-family:var(--f-mono); font-size:10.5px; letter-spacing:0.04em;
+    color:color-mix(in srgb, var(--d) 75%, var(--ink));
+  }
+  /* last tile spans both columns on phones so nothing sits alone */
+  @media (max-width:640px){ .domain:last-child{ grid-column:1 / -1; } }
+
+  /* ---- tools ---- */
+  .tools{ display:flex; flex-direction:column; gap:10px; }
+  .tool{
+    display:block; text-decoration:none;
+    padding:16px 18px;
+    border-radius:12px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  a.tool:hover{
+    transform:translateX(4px);
+    border-color:color-mix(in srgb, var(--accent) 55%, var(--line));
+    background:color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
+    box-shadow:0 8px 22px -16px color-mix(in srgb, var(--accent) 80%, transparent);
+  }
+  .tool-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px;
+  }
+  .tool-name-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-width:0; }
+  .tool-name{ font-weight:600; font-size:1.1rem; color:var(--ink); }
+  .tool-status{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--f-mono); font-size:10.5px; letter-spacing:0.03em;
+    padding:3px 9px; border-radius:999px;
+    color:var(--ink-soft); background:color-mix(in srgb, var(--ink-faint) 12%, transparent);
+  }
+  .tool-status .s-dot{ width:6px; height:6px; border-radius:50%; background:var(--ink-faint); flex:none; }
+  .tool-status.is-live{ color:color-mix(in srgb, var(--d-cyber) 80%, var(--ink)); background:color-mix(in srgb, var(--d-cyber) 14%, transparent); }
+  .tool-status.is-live .s-dot{ background:var(--d-cyber); }
+  .tool-status.is-progress{ color:var(--accent-strong); background:var(--accent-soft); }
+  .tool-status.is-progress .s-dot{ background:var(--accent); }
+  @media (prefers-reduced-motion:no-preference){
+    .tool-status.is-live .s-dot{ animation:pulse 2.2s ease-in-out infinite; }
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--d-cyber) 55%, transparent); }
+    50%{ box-shadow:0 0 0 4px color-mix(in srgb, var(--d-cyber) 0%, transparent); }
+  }
+  .tool-arrow{
+    /* wit in plaats van het accentblauw; op .35 viel wit juist weg, vandaar hoger */
+    font-family:var(--f-mono); font-size:13px; color:var(--ink); flex:none;
+    opacity:.55; transition:opacity .18s ease, transform .18s ease;
+  }
+  a.tool:hover .tool-arrow{ opacity:1; transform:translateX(3px); }
+  .tool-desc{ margin:0; font-size:0.95rem; color:var(--ink-soft); max-width:58ch; }
+
+  /* which domains a tool covers */
+  .cover{ display:flex; align-items:center; gap:5px; margin-top:10px; }
+  .cover .lbl{
+    font-family:var(--f-mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-faint); margin-right:4px;
+  }
+  .cover i{ width:9px; height:9px; border-radius:3px; background:var(--d); }
+  .cover i.off{ background:transparent; border:1px solid var(--line); }
+
+  .manuals{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .manual-chip{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500;
+    padding:6px 12px; border-radius:999px; text-decoration:none;
+    border:1px solid color-mix(in srgb, var(--d) 35%, var(--line));
+    background:color-mix(in srgb, var(--d) 10%, var(--surface));
+    color:var(--ink);
+    transition:background .15s ease, transform .15s ease;
+  }
+  .manual-chip::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--d); }
+  .manual-chip:hover{ background:color-mix(in srgb, var(--d) 22%, var(--surface)); transform:translateY(-1px); }
+
+  /* ---- source project ---- */
+  .sources{ display:flex; flex-wrap:wrap; gap:8px 10px; }
+  .source-chip{
+    font-family:var(--f-mono); font-size:12px; font-weight:500;
+    padding:7px 14px; border-radius:999px; text-decoration:none;
+    color:var(--accent-strong); background:var(--accent-soft);
+    border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    transition:transform .15s ease;
+  }
+  a.source-chip:hover{ transform:translateY(-1px); }
+
+  /* ---- footer ---- */
+  footer{
+    padding-top:26px; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .footer-spectrum{ display:flex; gap:3px; height:3px; width:90px; }
+  .footer-spectrum i{ flex:1; border-radius:999px; }
+  .footer-links{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .footer-links a{
+    text-decoration:none; font-family:var(--f-mono); font-size:12.5px; color:var(--ink-soft);
+    border-bottom:1px solid var(--line); padding-bottom:1px;
+  }
+  .footer-links a:hover{ color:var(--accent-strong); border-color:var(--accent-strong); }
+  .footer-note{ margin:0; font-size:12.5px; color:var(--ink-faint); max-width:58ch; }
+
+  @media (max-width:480px){
+    .wrap{ padding:44px 18px 60px; gap:44px; }
+    .tool{ padding:14px 14px; }
+    .tool-head{ align-items:flex-start; }
+  }
+</style>
+
+<div class="glow" aria-hidden="true">
+  <span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span><span class="g5"></span>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <svg class="scene" viewBox="0 0 680 260" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="sc-sunglow">
+          <stop offset="0" style="stop-color:var(--sc-sun);stop-opacity:.55"/>
+          <stop offset="1" style="stop-color:var(--sc-sun);stop-opacity:0"/>
+        </radialGradient>
+        <linearGradient id="sc-fog" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color:var(--paper);stop-opacity:0"/>
+          <stop offset=".5" style="stop-color:var(--paper);stop-opacity:.75"/>
+          <stop offset="1" style="stop-color:var(--paper);stop-opacity:0"/>
+        </linearGradient>
+        <linearGradient id="sc-fadeg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+          <stop offset=".35" stop-color="#fff" stop-opacity="1"/>
+          <stop offset=".8" stop-color="#fff" stop-opacity="1"/>
+          <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="sc-fade"><rect width="680" height="260" fill="url(#sc-fadeg)"/></mask>
+        <clipPath id="sc-above"><rect width="680" height="200"/></clipPath>
+        <clipPath id="sc-below"><rect y="200" width="680" height="60"/></clipPath>
+      </defs>
+      <g mask="url(#sc-fade)">
+        <g id="sc-stars"></g>
+        <circle class="sc-orbit" cx="760" cy="-170" r="250"/>
+        <circle class="sc-orbit thin" cx="760" cy="-170" r="285"/>
+        <g id="sc-rays" clip-path="url(#sc-above)"></g>
+        <g clip-path="url(#sc-above)">
+          <circle cx="470" cy="200" r="110" fill="url(#sc-sunglow)"/>
+          <circle class="sc-halo" cx="470" cy="200" r="46"/>
+          <circle class="sc-halo" cx="470" cy="200" r="68" stroke-dasharray="2 4"/>
+          <circle class="sc-sun" cx="470" cy="200" r="28"/>
+        </g>
+        <path class="sc-land back" d="M0,200 V176 C60,168 120,170 190,180 C260,190 350,197 470,200 Z"/>
+        <path class="sc-land" d="M0,200 V188 C50,182 110,183 170,190 C240,197 340,200 470,200 Z"/>
+        <g id="sc-grid" clip-path="url(#sc-below)"></g>
+        <g class="sc-sea">
+          <path d="M24,212 q8,-4 16,0 t16,0"/><path d="M96,216 q8,-4 16,0 t16,0"/><path d="M170,211 q8,-4 16,0 t16,0"/>
+          <path d="M54,228 q10,-5 20,0 t20,0"/><path d="M140,232 q10,-5 20,0 t20,0"/><path d="M232,224 q10,-5 20,0 t20,0"/>
+          <path d="M16,248 q12,-6 24,0 t24,0"/><path d="M110,250 q12,-6 24,0 t24,0"/><path d="M206,246 q12,-6 24,0 t24,0"/>
+        </g>
+        <line class="sc-horizon" x1="0" y1="200" x2="680" y2="200"/>
+        <rect x="0" y="184" width="680" height="32" fill="url(#sc-fog)"/>
+        <circle class="sc-beyond" cx="640" cy="196" r="1.4"/>
+      </g>
+    </svg>
+    <svg class="watermark" viewBox="0 0 600 132" aria-hidden="true" focusable="false">
+      <line class="wm-strata" x1="0" y1="112" x2="190" y2="112"/>
+      <line class="wm-strata" x1="0" y1="120" x2="160" y2="120"/>
+      <line class="wm-strata" x1="0" y1="128" x2="120" y2="128"/>
+      <line class="wm-base" x1="0" y1="50" x2="600" y2="50"/>
+      <g class="wm-grid">
+        <circle cx="410" cy="10" r="1"/><circle cx="430" cy="10" r="1"/><circle cx="450" cy="10" r="1"/><circle cx="470" cy="10" r="1"/><circle cx="490" cy="10" r="1"/><circle cx="510" cy="10" r="1"/><circle cx="530" cy="10" r="1"/><circle cx="550" cy="10" r="1"/><circle cx="570" cy="10" r="1"/><circle cx="590" cy="10" r="1"/>
+        <circle cx="410" cy="30" r="1"/><circle cx="430" cy="30" r="1"/><circle cx="450" cy="30" r="1"/><circle cx="470" cy="30" r="1"/><circle cx="490" cy="30" r="1"/><circle cx="510" cy="30" r="1"/><circle cx="530" cy="30" r="1"/><circle cx="550" cy="30" r="1"/><circle cx="570" cy="30" r="1"/><circle cx="590" cy="30" r="1"/>
+        <circle cx="410" cy="50" r="1"/><circle cx="430" cy="50" r="1"/><circle cx="450" cy="50" r="1"/><circle cx="470" cy="50" r="1"/><circle cx="490" cy="50" r="1"/><circle cx="510" cy="50" r="1"/><circle cx="530" cy="50" r="1"/><circle cx="550" cy="50" r="1"/><circle cx="570" cy="50" r="1"/><circle cx="590" cy="50" r="1"/>
+        <circle cx="410" cy="70" r="1"/><circle cx="430" cy="70" r="1"/><circle cx="450" cy="70" r="1"/><circle cx="470" cy="70" r="1"/><circle cx="490" cy="70" r="1"/><circle cx="510" cy="70" r="1"/><circle cx="530" cy="70" r="1"/><circle cx="550" cy="70" r="1"/><circle cx="570" cy="70" r="1"/><circle cx="590" cy="70" r="1"/>
+        <circle cx="410" cy="90" r="1"/><circle cx="430" cy="90" r="1"/><circle cx="450" cy="90" r="1"/><circle cx="470" cy="90" r="1"/><circle cx="490" cy="90" r="1"/><circle cx="510" cy="90" r="1"/><circle cx="530" cy="90" r="1"/><circle cx="550" cy="90" r="1"/><circle cx="570" cy="90" r="1"/><circle cx="590" cy="90" r="1"/>
+      </g>
+      <g class="wm-stem">
+        <line x1="220" y1="50" x2="220" y2="21.7"/><line x1="260" y1="50" x2="260" y2="78.3"/><line x1="280" y1="50" x2="280" y2="90"/><line x1="300" y1="50" x2="300" y2="78.3"/><line x1="340" y1="50" x2="340" y2="21.7"/><line x1="360" y1="50" x2="360" y2="10"/><line x1="380" y1="50" x2="380" y2="21.7"/>
+      </g>
+      <polyline class="wm-line" points="0,50 10,34.7 20,21.7 30,13 40,10 50,13 60,21.7 70,34.7 80,50 90,65.3 100,78.3 110,87 120,90 130,87 140,78.3 150,65.3 160,50 170,34.7 180,21.7 190,13 200,10 210,13 220,21.7 230,34.7 240,50 250,65.3 260,78.3 270,87 280,90 290,87 300,78.3 310,65.3 320,50 330,34.7 340,21.7 350,13 360,10 370,13 380,21.7 390,34.7 400,50"/>
+      <path class="wm-line" d="M400,50 H420 V70 H440 V90 H460 V70 H480 V50 H500 V30 H520 V10 H540 V30 H560 V50 H580 V70 H600"/>
+      <g class="wm-dot">
+        <circle cx="220" cy="21.7" r="2.6"/><circle cx="240" cy="50" r="2.6"/><circle cx="260" cy="78.3" r="2.6"/><circle cx="280" cy="90" r="2.6"/><circle cx="300" cy="78.3" r="2.6"/><circle cx="320" cy="50" r="2.6"/><circle cx="340" cy="21.7" r="2.6"/><circle cx="360" cy="10" r="2.6"/><circle cx="380" cy="21.7" r="2.6"/>
+      </g>
+    </svg>
+    <h1>Assay<span class="stop">.</span></h1>
+    <div class="spectrum" aria-hidden="true">
+      <i style="background:var(--d-aml)"></i>
+      <i style="background:var(--d-privacy)"></i>
+      <i style="background:var(--d-ai)"></i>
+      <i style="background:var(--d-sanctions)"></i>
+      <i style="background:var(--d-cyber)"></i>
+    </div>
+    </header>
+
+  <section>
+    <div class="section-label">
+      <h2>Vijf domeinen</h2>
+      <span class="count">5</span>
+    </div>
+    <p class="section-note">Dezelfde kleur betekent hetzelfde domein op elke pagina.</p>
+    <div class="domains">
+      <div class="domain" style="--d:var(--d-aml)">
+        <span class="d-badge">AML</span>
+        <span class="d-name">AML/TF</span>
+        <span class="d-anchor">Wwft &middot; AMLR (Vo. 2024/1624, vanaf 2027)</span>
+      </div>
+      <div class="domain" style="--d:var(--d-privacy)">
+        <span class="d-badge">AVG</span>
+        <span class="d-name">Privacy</span>
+        <span class="d-anchor">AVG (Vo. 2016/679)</span>
+      </div>
+      <div class="domain" style="--d:var(--d-ai)">
+        <span class="d-badge">AI</span>
+        <span class="d-name">AI-governance</span>
+        <span class="d-anchor">EU AI-verordening (2024/1689, gewijzigd 2026/1744)</span>
+      </div>
+      <div class="domain" style="--d:var(--d-sanctions)">
+        <span class="d-badge">SAN</span>
+        <span class="d-name">Sancties</span>
+        <span class="d-anchor">EU-sanctieverordeningen &middot; OFAC</span>
+      </div>
+      <div class="domain" style="--d:var(--d-cyber)">
+        <span class="d-badge">CYB</span>
+        <span class="d-name">Cybersecurity</span>
+        <span class="d-anchor">NIS2 &middot; Cyberresilienceverordening</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">
+      <h2>Instrumenten</h2>
+      <span class="count">7</span>
+    </div>
+    <div class="tools">
+      <a class="tool" href="https://claude.ai/code/artifact/fc866dd8-ac88-4522-ac59-fe25e362bfe8" target="_blank" rel="noopener noreferrer">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Regulatory Radar</span>
+            <span class="tool-status is-live"><span class="s-dot"></span>automatisch &middot; ma</span>
+          </div>
+          <span class="tool-arrow">bekijk &rarr;</span>
+        </div>
+        <div class="cover"><span class="lbl">Domeinen</span><i style="--d:var(--d-aml)"></i><i style="--d:var(--d-privacy)"></i><i style="--d:var(--d-ai)"></i><i style="--d:var(--d-sanctions)"></i><i style="--d:var(--d-cyber)"></i></div>
+      </a>
+      <a class="tool" href="https://claude.ai/code/artifact/ecaa003e-05c6-4b97-9186-a138fe788756" target="_blank" rel="noopener noreferrer">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Ruleverse</span>
+            <span class="tool-status is-progress"><span class="s-dot"></span>in opbouw</span>
+          </div>
+          <span class="tool-arrow">bekijk &rarr;</span>
+        </div>
+        <div class="cover"><span class="lbl">Domeinen</span><i style="--d:var(--d-aml)"></i><i style="--d:var(--d-privacy)"></i><i style="--d:var(--d-ai)"></i><i style="--d:var(--d-sanctions)"></i><i style="--d:var(--d-cyber)"></i></div>
+      </a>
+      <a class="tool" href="https://claude.ai/code/artifact/58a1f0c2-17c7-47bd-ad77-339406b6d777" target="_blank" rel="noopener noreferrer">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Privacyroute</span>
+            <span class="tool-status"><span class="s-dot"></span>per organisatie</span>
+          </div>
+          <span class="tool-arrow">bekijk &rarr;</span>
+        </div>
+        <div class="cover"><span class="lbl">Domeinen</span><i class="off"></i><i style="--d:var(--d-privacy)"></i><i class="off"></i><i class="off"></i><i class="off"></i></div>
+      </a>
+      <a class="tool" href="https://claude.ai/artifact/KPdFQY3jKPAChEUpE3uX31" target="_blank" rel="noopener noreferrer">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Themaroute</span>
+            <span class="tool-status"><span class="s-dot"></span>per thema</span>
+          </div>
+          <span class="tool-arrow">bekijk &rarr;</span>
+        </div>
+        <div class="cover"><span class="lbl">Domeinen</span><i style="--d:var(--d-aml)"></i><i class="off"></i><i class="off"></i><i style="--d:var(--d-sanctions)"></i><i class="off"></i></div>
+      </a>
+      <a class="tool" href="https://claude.ai/artifact/5WbXV3KvTXXkJ9KXFCacoY" target="_blank" rel="noopener noreferrer">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Article Desk</span>
+            <span class="tool-status is-live"><span class="s-dot"></span>artikelgewijs</span>
+          </div>
+          <span class="tool-arrow">bekijk &rarr;</span>
+        </div>
+        <div class="cover"><span class="lbl">Domeinen</span><i style="--d:var(--d-aml)"></i><i style="--d:var(--d-privacy)"></i><i style="--d:var(--d-ai)"></i><i style="--d:var(--d-sanctions)"></i><i style="--d:var(--d-cyber)"></i></div>
+      </a>
+      <div class="tool">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Article Manuals</span>
+            <span class="tool-status"><span class="s-dot"></span>naslag</span>
+          </div>
+        </div>
+        <div class="manuals">
+          <a class="manual-chip" style="--d:var(--d-privacy)" href="https://claude.ai/artifact/4cqwfaqE6LxbqAk84J864b" target="_blank" rel="noopener noreferrer">AVG + UAVG</a>
+          <a class="manual-chip" style="--d:var(--d-ai)" href="https://claude.ai/artifact/HBqVkfh8PCeL3axPvjRfqh" target="_blank" rel="noopener noreferrer">AI Act</a>
+          <a class="manual-chip" style="--d:var(--d-aml)" href="https://claude.ai/artifact/BhDBgWaHUwAHQ3qECpdy7y" target="_blank" rel="noopener noreferrer">AMLR</a>
+          <a class="manual-chip" style="--d:var(--d-sanctions)" href="https://claude.ai/artifact/XLJfLaQETh222aQWwqfPCa" target="_blank" rel="noopener noreferrer">Sancties</a>
+          <a class="manual-chip" style="--d:var(--d-cyber)" href="https://claude.ai/artifact/VXGxkM9zt3FN5w74tC8fBs" target="_blank" rel="noopener noreferrer">NIS2</a>
+        </div>
+      </div>
+      <a class="tool" href="https://claude.ai/artifact/NLCv5S7iw3R7mNUAMcZKB7" target="_blank" rel="noopener noreferrer">
+        <div class="tool-head">
+          <div class="tool-name-row">
+            <span class="tool-name">Rules for AI Use</span>
+            <span class="tool-status is-live"><span class="s-dot"></span>werkwijze &middot; 8 grepen</span>
+          </div>
+          <span class="tool-arrow">bekijk &rarr;</span>
+        </div>
+        <div class="cover"><span class="lbl">Domeinen</span><i style="--d:var(--d-aml)"></i><i style="--d:var(--d-privacy)"></i><i style="--d:var(--d-ai)"></i><i style="--d:var(--d-sanctions)"></i><i style="--d:var(--d-cyber)"></i></div>
+      </a>
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="footer-spectrum" aria-hidden="true">
+      <i style="background:var(--d-aml)"></i><i style="background:var(--d-privacy)"></i><i style="background:var(--d-ai)"></i><i style="background:var(--d-sanctions)"></i><i style="background:var(--d-cyber)"></i>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs){ var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); return n; }
+  var seed = 7;
+  function rnd(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  var stars = document.getElementById('sc-stars');
+  if (stars) {
+    for (var i = 0; i < 90; i++) {
+      var x = Math.pow(rnd(), 1.35) * 680;
+      var y = Math.pow(rnd(), 1.2) * 165;
+      stars.appendChild(el('circle', { cx:x.toFixed(1), cy:y.toFixed(1), r:(0.4 + rnd() * 0.9).toFixed(2), 'class':'sc-star', opacity:(0.18 + rnd() * 0.45).toFixed(2) }));
+    }
+  }
+  var VX = 470, VY = 200;
+  var rays = document.getElementById('sc-rays');
+  if (rays) {
+    for (var a = 196; a <= 344; a += 9.25) {
+      var t = a * Math.PI / 180;
+      rays.appendChild(el('line', { x1:(VX + Math.cos(t) * 40).toFixed(1), y1:(VY + Math.sin(t) * 40).toFixed(1), x2:(VX + Math.cos(t) * 420).toFixed(1), y2:(VY + Math.sin(t) * 420).toFixed(1), 'class':'sc-ray' }));
+    }
+  }
+  var grid = document.getElementById('sc-grid');
+  if (grid) {
+    for (var gx = 320; gx <= 1120; gx += 50) {
+      grid.appendChild(el('line', { x1:VX, y1:VY, x2:VX + (gx - VX) * 1.6, y2:VY + 96, 'class':'sc-grid' }));
+    }
+    [4, 10, 19, 32, 50].forEach(function(d){
+      grid.appendChild(el('line', { x1:(VX - d * 1.4).toFixed(1), y1:VY + d, x2:680, y2:VY + d, 'class':'sc-grid' }));
+    });
+  }
+})();
+</script>
+
+<div id="switches">
+  <button id="loginswitch" type="button" onclick="location.href='https://zee.2becology.nl'">inloggen</button>
+  <button id="langswitch" type="button" lang="en">English</button>
+</div>
+
+<script>
+/* Fullscreen en leesstand. De animatie en het geluid die hier stonden zijn
+   eruit gesloopt; wat overblijft is de knoppenbalk rechtsonder. */
+(function(){
+  var knopBak = document.getElementById('switches');
+  if(!knopBak) return;
+  knopBak.style.zIndex = '2147483000';
+
+  /* ---- fullscreen ----
+     Werkt alleen als de omgeving het toestaat; in een ingesloten venster mag de
+     browser het weigeren. Dan zegt de knop dat, in plaats van niets te doen. */
+  var fsKnop = document.createElement('button');
+  fsKnop.id = 'fullscreenswitch';
+  fsKnop.type = 'button';
+  fsKnop.style.cssText = 'font-family:ui-monospace,SFMono-Regular,Menlo,monospace;' +
+    'font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-shadow:none;' +
+    'padding:10px 16px;border-radius:999px;cursor:pointer;border:1px solid #94A3B8;' +
+    'background:#FFFFFF;color:#14233D;box-shadow:0 8px 22px -10px rgba(0,0,0,.6);';
+  function fsStand(){
+    var aan = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    fsKnop.textContent = aan ? 'fullscreen uit' : 'fullscreen';
+  }
+  function fsGeweigerd(){
+    fsKnop.textContent = 'niet toegestaan';
+    setTimeout(fsStand, 2200);
+  }
+  fsKnop.addEventListener('click', function(){
+    var d = document, el = d.documentElement;
+    if(d.fullscreenElement || d.webkitFullscreenElement){
+      var uit = d.exitFullscreen || d.webkitExitFullscreen;
+      if(uit) uit.call(d);
+      return;
+    }
+    var aanvraag = el.requestFullscreen || el.webkitRequestFullscreen;
+    if(!aanvraag){ fsGeweigerd(); return; }
+    var belofte = aanvraag.call(el);
+    if(belofte && belofte['catch']) belofte['catch'](fsGeweigerd);
+  });
+  document.addEventListener('fullscreenchange', fsStand);
+  document.addEventListener('webkitfullscreenchange', fsStand);
+  fsStand();
+  /* ---- leesstand ----
+     Zet het hele palet om naar papier met zwarte letters, haalt de foto, de
+     bewegingen en de schaduwen weg, en geeft de tekst grotere letters en meer
+     regelafstand. Het werkt door de kleurvariabelen te overschrijven, dus elke
+     pagina volgt vanzelf zonder dat de opmaak zelf wordt aangeraakt. */
+  var leesCss = document.createElement('style');
+  leesCss.textContent =
+    'body.lezen{' +
+      '--paper:#F6F4EF!important;--bg:#F6F4EF!important;' +
+      '--surface:#FFFFFF!important;--surface-2:#EFECE5!important;--sunk:#EFECE5!important;--surface-soft:#EFECE5!important;' +
+      '--ink:#1B1B1B!important;' +
+      '--ink-soft:#3F4A52!important;--muted:#3F4A52!important;--ink-muted:#3F4A52!important;' +
+      '--ink-faint:#6B7278!important;--tierb:#6B7278!important;' +
+      '--line:#D9D4CA!important;--border:#D9D4CA!important;--line-soft:#E6E2DA!important;--line-strong:#C7C1B5!important;' +
+      '--accent:#1A4C7A!important;--primary:#1A4C7A!important;' +
+      '--accent-strong:#113456!important;--primary-deep:#113456!important;' +
+      '--accent-soft:#E7EDF3!important;--primary-soft:#E7EDF3!important;--accent-ink:#FFFFFF!important;' +
+      '--glow:0!important;--scene-on:0!important;--ha:0!important;--plate:0!important;--veil:1!important;' +
+      'background:#F6F4EF!important;color:#1B1B1B!important;' +
+      'font-size:18px!important;line-height:1.8!important;text-shadow:none!important;color-scheme:light;' +
+    '}' +
+    'body.lezen *{animation:none!important;transition:none!important;text-shadow:none!important;box-shadow:none!important}' +
+    'body.lezen .glow,body.lezen .scene,' +
+    'body.lezen .watermark,body.lezen .band{display:none!important}' +
+    'body.lezen .hero,body.lezen .topbar{background:none!important}' +
+    'body.lezen .hero *:not(a):not(.stop),body.lezen .topbar *:not(a),' +
+    'body.lezen .statement *,body.lezen .role{color:#1B1B1B!important}' +
+    'body.lezen p,body.lezen li{max-width:72ch}' +
+    'body.lezen p{margin-block:.9em}';
+  document.head.appendChild(leesCss);
+
+  var leesKnop = document.createElement('button');
+  leesKnop.id = 'leesswitch';
+  leesKnop.type = 'button';
+  leesKnop.style.cssText = fsKnop.style.cssText;
+  function leesStand(){
+    var aan = document.body.classList.contains('lezen');
+    leesKnop.textContent = aan ? 'lezen uit' : 'lezen';
+    leesKnop.setAttribute('aria-pressed', aan ? 'true' : 'false');
+  }
+  leesKnop.addEventListener('click', function(){
+    var aan = !document.body.classList.contains('lezen');
+    document.body.classList.toggle('lezen', aan);
+    try{ localStorage.setItem('orlando-lezen', aan ? '1' : '0'); }catch(e){}
+    leesStand();
+  });
+  try{
+    if(localStorage.getItem('orlando-lezen') === '1') document.body.classList.add('lezen');
+  }catch(e){}
+  leesStand();
+
+  knopBak.insertBefore(fsKnop, knopBak.firstChild);
+  knopBak.insertBefore(leesKnop, knopBak.firstChild);
+  /* De balk kneep de knoppen samen tot hun tekst over de rand liep. Niet laten
+     krimpen, en liever afbreken naar een tweede regel dan over elkaar heen. */
+  knopBak.style.display = 'flex';
+  knopBak.style.flexWrap = 'wrap';
+  knopBak.style.justifyContent = 'flex-end';
+  knopBak.style.gap = '8px';
+  knopBak.style.maxWidth = 'calc(100vw - 36px)';
+  var knoppen = knopBak.querySelectorAll('button');
+  for(var q=0; q<knoppen.length; q++){
+    knoppen[q].style.flex = '0 0 auto';
+    knoppen[q].style.whiteSpace = 'nowrap';
+  }
+
+
+
+
+})();
+</script>
+
+<script>
+/* ---- NL / EN ----
+   Het Nederlands staat in de pagina zelf; het Engels staat hieronder. De knop
+   wisselt de tekstknopen om en zet het taalattribuut, zodat ook de afbreking
+   meegaat. Alles wat geen vertaling heeft (namen, wetsafkortingen) blijft staan. */
+(function(){
+  var EN = {
+    "Verhitten tot schijn verbrandt en de waarheid zich laat vinden.":
+      "Heat until pretence burns away and truth lets itself be found.",
+    "Vijf domeinen": "Five domains",
+    "Dezelfde kleur betekent hetzelfde domein op elke pagina.":
+      "The same colour means the same domain on every page.",
+    "Wwft · AMLR (Vo. 2024/1624, vanaf 2027)": "Dutch AML Act · AMLR (Reg. 2024/1624, from 2027)",
+    "AVG (Vo. 2016/679)": "GDPR (Reg. 2016/679)",
+    "AI-governance": "AI governance",
+    "EU AI-verordening (2024/1689, gewijzigd 2026/1744)": "EU AI Act (2024/1689, amended 2026/1744)",
+    "Sancties": "Sanctions",
+    "EU-sanctieverordeningen · OFAC": "EU sanctions regulations · OFAC",
+    "NIS2 · Cyberresilienceverordening": "NIS2 · Cyber Resilience Act",
+    "Instrumenten": "Instruments",
+    "Domeinen": "Domains",
+    "bekijk →": "open →",
+    "automatisch · ma": "automatic · Mon",
+    "Wekelijkse scan van nieuwe regelgeving over alle vijf domeinen, met de kruisverbanden ertussen.":
+      "Weekly scan of new regulation across all five domains, with the cross-links between them.",
+    "in opbouw": "in progress",
+    "artikelgewijs": "article by article",
+    "naslag": "reference",
+    "Netwerkkaart van thema's die de vijf domeinen verbinden, met zaken, cursussen en bronnen erbij.":
+      "Network map of themes that connect the five domains, with cases, courses and sources alongside.",
+    "per organisatie": "per organisation",
+    "Stap-voor-stap AVG- en DPIA-workflow met voortgang per organisatie en een PDF-rapport van openstaande punten.":
+      "Step-by-step GDPR and DPIA workflow with progress per organisation and a PDF report of open items.",
+    "per thema": "per theme",
+    "Van los idee naar toetsbaar onderzoeksthema voor witwassen, fraude en sancties: zes stappen, zes toetsen met de goedkoopste eerst, en het kerkhof van gesneuvelde thema’s als opbrengst. Voortgang per thema en een PDF-rapport.":
+      "From loose idea to testable research theme for money laundering, fraud and sanctions: six steps, six tests with the cheapest first, and the graveyard of killed themes as the yield. Progress per theme and a PDF report.",
+    "De vaste plek per artikel voor AVG, UAVG, AI Act, AMLR, sancties en NIS2: oefenen of naslaan, filteren op wet en domein, eigen aantekeningen, herhaling op schema.":
+      "The fixed place per article for GDPR, the Dutch GDPR Act, the AI Act, AMLR, sanctions and NIS2: practise or look up, filter by law and domain, your own notes, repetition on schedule.",
+    "Naslag per artikel: de regel, waar het misgaat, het kruisverband en een reflectievraag. Hier schrijf je ook je eigen aantekeningen bij.":
+      "Reference per article: the rule, where it goes wrong, the cross-link and a reflection question. This is also where you add your own notes.",
+    "werkwijze · 8 grepen": "method · 8 moves",
+    "Hoe je Claude inzet bij onderzoek: wat je er nooit in stopt, de acht grepen, de vaste volgorde en het logboek. Geldt voor alle vijf domeinen.":
+      "How to put Claude to work in research: what you never put into it, the eight moves, the fixed order and the logbook. Applies to all five domains."
+  };
+
+  var wrap = document.querySelector('.wrap');
+  if(!wrap) return;
+  var items = [];
+  var walk = document.createTreeWalker(wrap, NodeFilter.SHOW_TEXT, null);
+  var n;
+  while((n = walk.nextNode())){
+    var v = n.nodeValue;
+    if(!v || !v.trim()) continue;
+    var pn = n.parentNode ? n.parentNode.nodeName : '';
+    if(pn === 'SCRIPT' || pn === 'STYLE') continue;
+    if(EN[v.trim()] !== undefined) items.push({ node:n, nl:v });
+  }
+
+  var btn = document.getElementById('langswitch');
+  var lang = 'nl';
+  try{ if(localStorage.getItem('orlando-lang') === 'en') lang = 'en'; }catch(e){}
+
+  function setLang(l){
+    lang = (l === 'en') ? 'en' : 'nl';
+    for(var x=0; x<items.length; x++){
+      var it = items[x];
+      if(lang === 'en'){
+        var lead = it.nl.match(/^\s*/)[0], tail = it.nl.match(/\s*$/)[0];
+        it.node.nodeValue = lead + EN[it.nl.trim()] + tail;
+      } else {
+        it.node.nodeValue = it.nl;
+      }
+    }
+    document.documentElement.lang = lang;
+    if(btn){
+      btn.textContent = lang === 'en' ? 'Nederlands' : 'English';
+      btn.setAttribute('lang', lang === 'en' ? 'nl' : 'en');
+    }
+    try{ localStorage.setItem('orlando-lang', lang); }catch(e){}
+  }
+
+  if(btn) btn.addEventListener('click', function(){ setLang(lang === 'en' ? 'nl' : 'en'); });
+  setLang(lang);
+})();
+</script>
+
+<!-- De animatie, het slotscherm en het geluid zijn eruit gesloopt. -->
+
+</body></html>
