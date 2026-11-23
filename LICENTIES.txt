@@ -1,23 +1,22 @@
 LICENTIES VAN DE MEEGELEVERDE LETTERTYPES
 =========================================
 
-Deze map bevat drie lettertypebestanden (.woff2, alleen Latijnse tekens),
-afkomstig uit de npm-pakketten @fontsource/newsreader,
-@fontsource/ibm-plex-sans en @fontsource/ibm-plex-mono (versie 5.3.0).
-De lettertypes zelf zijn niet aangepast; Fontsource heeft ze omgezet naar
-.woff2 en beperkt tot de Latijnse tekens.
+Deze map bevat twee lettertypebestanden (.woff2).
+
+IBMPlexMono-Medium.woff2
+  IBM Plex Mono Medium, het officiele, onaangepaste bestand uit IBM's
+  eigen pakket @ibm/plex-mono (map fonts/complete/woff2).
+  Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"
 
 newsreader-latin-500-italic.woff2
-  Newsreader. Copyright 2020 The Newsreader Project Authors
+  Newsreader (cursief, gewicht 500), afkomstig uit het npm-pakket
+  @fontsource/newsreader 5.3.0. Fontsource heeft het omgezet naar .woff2
+  en beperkt tot de Latijnse tekens. De copyrightregel noemt geen
+  gereserveerde naam.
+  Copyright 2020 The Newsreader Project Authors
   (http://github.com/productiontype/Newsreader)
 
-ibm-plex-sans-latin-400-normal.woff2
-  IBM Plex Sans. Copyright 2019 IBM Corp. All rights reserved.
-
-ibm-plex-mono-latin-500-normal.woff2
-  IBM Plex Mono. Copyright 2017 IBM Corp. All rights reserved.
-
-Alle drie vallen onder de SIL Open Font License, Version 1.1. De volledige
+Beide vallen onder de SIL Open Font License, Version 1.1. De volledige
 licentietekst staat hieronder en is ook te vinden op
 http://scripts.sil.org/OFL
 
